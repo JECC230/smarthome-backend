@@ -10,7 +10,7 @@ export function authMiddleware(req, res, next) {
     const header = req.headers.authorization;
 
     if (!header) {
-        return res.status(401).json({ error: 'No autorizado: Falta Authorization Header' });
+        return res.status(401).json({ error: 'No autorizado: Falta hacer Login' });
     }
 
     const [type, token] = header.split(' ');
