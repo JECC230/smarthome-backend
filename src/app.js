@@ -14,7 +14,7 @@ const PUERTO = process.env.PORT || 3000;
 //  2. Configuramos las reglas del Rate Limiting
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // Memoria de 15 minutos
-    max: 100, // Límite de 100 peticiones por cada IP en esa ventana de tiempo
+    max: 100, // Límite de  peticiones por cada IP en esa ventana de tiempo
     message: { error: 'Demasiadas peticiones desde esta IP. Por favor, intenta de nuevo en 15 minutos.' },
     standardHeaders: true, // Envía la info del límite en los headers estándar (RateLimit-*)
     legacyHeaders: false, // Deshabilita los headers antiguos (X-RateLimit-*)
