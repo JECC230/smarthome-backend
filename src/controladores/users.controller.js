@@ -4,8 +4,6 @@ import { UsersRepository } from '../repositories/users.repository.js';
 
 const repo = new UsersRepository();
 
-
-
 export async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
@@ -32,12 +30,18 @@ export async function getHouseUsers(req, res) {
   }
 }
 
-
 export async function create(req, res) {
   try {
-    const { email, password, role, house_id } = req.body;
+
+    const { email, password, role } = req.body; 
+    
+    //  1. Extraemos el house_id directamente del token del Admin (req.user)
+    const { house_id } = req.user; 
+
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
+    
+    //  2. Inyectamos el house_id seguro en la base de datos
     const newUser = await repo.create({ email, passwordHash, role: role || 'user', house_id });
     return res.status(201).json({ ok: true, user: newUser });
   } catch (error) {

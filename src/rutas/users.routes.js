@@ -1,6 +1,6 @@
 import express from 'express';
 import * as controller from '../controladores/users.controller.js';
-import { authMiddleware } from '../auth.js';
+import { authMiddleware, requireRole } from '../auth.js'; 
 
 export const router = express.Router();
 
@@ -11,5 +11,6 @@ router.post('/register-admin', controller.registerAdmin);
 router.post('/login', controller.loginUser);
 
 // RUTAS PROTEGIDAS: Requieren Token
-router.post('/create', authMiddleware, controller.create);
+// : Primero verifica que haya login, luego verifica que sea admin
+router.post('/create', authMiddleware, requireRole('admin'), controller.create); 
 router.get('/house', authMiddleware, controller.getHouseUsers);
