@@ -42,6 +42,15 @@ export class ProductsRepository {
     return result.rows[0];
   }
 
+  //  Busca coincidencias exactas ignorando mayúsculas/minúsculas
+  async findByNombre(nombre, houseId) {
+    const result = await pool.query(
+      'SELECT * FROM productos WHERE LOWER(nombre) = LOWER($1) AND house_id = $2 LIMIT 1',
+      [nombre, houseId]
+    );
+    return result.rows[0];
+  }
+
   async create({ nombre, categoria, marca, descripcion, stock, stock_minimo, house_id }) {
     const query = `
       INSERT INTO productos (nombre, categoria, marca, descripcion, stock, stock_minimo, house_id)
